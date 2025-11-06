@@ -1,0 +1,18 @@
+{ //     <div>
+
+//    <div className="relative w-full">
+//   
+//   <Hero />        {/* Hero stays intact */}
+//   <Charactersection />
+//   {/* <ImageSection /> */}
+// </div>
+
+// {/* Separate BmwWeb */}
+// <div className="relative z-20 min-h-screen">
+//   <BmwWeb />
+// </div>
+// <div className="relative z-20 min-h-screen">
+//   <Secondscroll />
+// </div>
+
+//     </div>}
