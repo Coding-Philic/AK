@@ -1,61 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Profile</title>
-    <link rel="stylesheet" href="all.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Faculty Profile - Dr. John Doe</title>
+<style>
+  body {
+    background: #0a0a0a;
+    color: #d0dfe0;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 255, 230, 0.3);
+  }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  header h1 {
+    font-size: 3rem;
+    margin: 0;
+    background: linear-gradient(90deg, #00ffff, #00d4aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 6px rgba(0, 255, 255, 0.5);
+  }
+  header h2 {
+    margin-top: 5px;
+    font-weight: 400;
+    background: linear-gradient(90deg, #00b5d8, #00ffdb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 4px rgba(0, 223, 216, 0.4);
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0;
+    margin: 20px 0 0 0;
+  }
+  nav a {
+    font-weight: bold;
+    background: linear-gradient(90deg, #00c8ff, #00afff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+    text-shadow: 0 0 4px rgba(0, 200, 255, 0.35);
+    transition: color 0.3s, text-shadow 0.3s;
+  }
+  nav a:hover {
+    color: #00ffaa;
+    text-shadow: 0 0 8px #00ffaa;
+  }
+  section.container {
+    opacity: 0;
+    transform: translateY(40px);
+    margin-bottom: 40px;
+  }
+  h3 {
+    background: linear-gradient(90deg, #00b5d8, #00ffdb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 5px rgba(0, 223, 216, 0.4);
+    margin-bottom: 15px;
+  }
+  .profile-img {
+    display: block;
+    max-width: 180px;
+    width: 100%;
+    height: auto;
+    margin: 15px auto;
+    border-radius: 50%;
+    border: 2px solid #00ffff;
+    box-shadow: 0 0 10px #00ffffaa;
+  }
+  p, ul, ol {
+    color: #b0c7cc;
+    line-height: 1.5;
+  }
+  ul.interests-list {
+    list-style: inside circle;
+  }
+  footer {
+    text-align: center;
+    padding: 15px 10px;
+    color: #666666;
+    border-top: 1px solid rgba(0, 255, 255, 0.15);
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  a[href^="mailto:"] {
+    color: #00ccaa;
+    background: none;
+    text-shadow: 0 0 4px #00ccaaaa;
+  }
+  a[href^="mailto:"]:hover {
+    color: #00ffaa;
+    text-shadow: 0 0 8px #00ffaa;
+  }
+</style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Dr. John Doe</h1>
-            <h2>Associate Professor, Department of Computer Science</h2>
-            <nav>
-                <ul>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#research">Research Interests</a></li>
-                    <li><a href="#publications">Publications</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    
-    <section id="about" class="container">
-        <h3>About Me</h3>
-        <img src="profile.jpg" alt="Dr. John Doe" class="profile-img">
-        <p>Dr. John Doe has over 10 years of experience in computer science education and research, specializing in artificial intelligence and machine learning.</p>
-    </section>
 
-    <section id="research" class="container">
-        <h3>Research Interests</h3>
-        <ul class="interests-list">
-            <li>Artificial Intelligence</li>
-            <li>Machine Learning</li>
-            <li>Data Mining</li>
-            <li>Natural Language Processing</li>
-        </ul>
-    </section>
+<header>
+  <div class="container">
+    <h1>Dr. John Doe</h1>
+    <h2>Associate Professor, Department of Computer Science</h2>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research Interests</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-    <section id="publications" class="container">
-        <h3>Publications</h3>
-        <ol>
-            <li>Doe, J. (2023). Title of Paper. Journal Name.</li>
-            <li>Doe, J. (2022). Title of Another Paper. Another Journal.</li>
-            <li>Doe, J. (2021). Title of Yet Another Paper. Yet Another Journal.</li>
-        </ol>
-    </section>
+<section id="about" class="container">
+  <h3>About Me</h3>
+  <img src="profile.jpg" alt="Dr. John Doe" class="profile-img" />
+  <p>Dr. John Doe has over 10 years of experience in computer science education and research, specializing in artificial intelligence and machine learning.</p>
+</section>
 
-    <section id="contact" class="container">
-        <h3>Contact Information</h3>
-        <p>Email: <a href="mailto:jdoe@university.edu">jdoe@university.edu</a></p>
-        <p>Phone: (123) 456-7890</p>
-        <p>Office: Room 123, Building Name</p>
-    </section>
+<section id="research" class="container">
+  <h3>Research Interests</h3>
+  <ul class="interests-list">
+    <li>Artificial Intelligence</li>
+    <li>Machine Learning</li>
+    <li>Data Mining</li>
+    <li>Natural Language Processing</li>
+  </ul>
+</section>
 
-    <footer>
-        <p>&copy; 2024 Dr. John Doe</p>
-    </footer>
+<section id="publications" class="container">
+  <h3>Publications</h3>
+  <ol>
+    <li>Doe, J. (2023). Title of Paper. Journal Name.</li>
+    <li>Doe, J. (2022). Title of Another Paper. Another Journal.</li>
+    <li>Doe, J. (2021). Title of Yet Another Paper. Yet Another Journal.</li>
+  </ol>
+</section>
+
+<section id="contact" class="container">
+  <h3>Contact Information</h3>
+  <p>Email: <a href="mailto:jdoe@university.edu">jdoe@university.edu</a></p>
+  <p>Phone: (123) 456-7890</p>
+  <p>Office: Room 123, Building Name</p>
+</section>
+
+<footer>
+  <p>&copy; 2024 Dr. John Doe</p>
+</footer>
+
+<!-- GSAP and ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.timeline()
+    .to("header", {opacity: 1, y: 0, duration: 1.2, ease: "power2.out"});
+
+  gsap.utils.toArray("section.container").forEach(section => {
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top 80%",
+        toggleActions: "play none none none",
+      }
+    }).to(section, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out"
+    });
+  });
+
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: "footer",
+      start: "top 90%",
+      toggleActions: "play none none none",
+    }
+  }).to("footer", {opacity: 1, y: 0, duration: 1, ease: "power2.out"});
+</script>
+
 </body>
 </html>
