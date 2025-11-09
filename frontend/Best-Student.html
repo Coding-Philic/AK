@@ -1,163 +1,312 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top 10 Students of Our College</title>
-    <link rel="stylesheet" href="assets/css/best.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Top 10 Students of Our College</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #10f2e5;
+      --secondary: #7d09ff;
+      --bg-dark: #181a23;
+      --glass-dark: rgba(35, 36, 43, 0.88);
+      --glass-border: rgba(120,120,255,0.20);
+      --neon-text: #10f2e5;
+      --neon-shadow: 0 0 3px #10f2e540, 0 0 5px #7d09ff33; /* Reduced neon */
+      --hover-gradient: linear-gradient(90deg, #10f2e5 0%, #7d09ff 100%);
+      --profile-radius: 16px;
+      --transition: 0.3s cubic-bezier(.7,.9,.06,.98);
+    }
+
+    * { box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    body {
+      margin: 0;
+      background: var(--bg-dark);
+      min-height: 100vh;
+      color: #eee;
+      position: relative;
+    }
+
+    header {
+      padding: 32px 0 16px 0;
+      background: var(--glass-dark);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: 0 2px 8px rgba(16,80,80,0.11);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .container { width: 90%; max-width: 1100px; margin: auto; }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin: 0;
+      color: var(--neon-text);
+      text-shadow: var(--neon-shadow);
+      font-weight: 700;
+      animation: neonPulseSmall 2.6s linear infinite alternate;
+    }
+    nav ul { display: flex; justify-content: center; gap: 40px; list-style: none; padding: 0; margin: 20px 0 0 0; }
+    nav a {
+      color: var(--neon-text);
+      padding: 8px 20px;
+      background: rgba(20,20,30,0.16);
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      box-shadow: 0 0 4px #10f2e52c;
+      transition: background var(--transition), color var(--transition);
+      border: 1px solid var(--secondary);
+    }
+    nav a:hover {
+      background: var(--hover-gradient);
+      color: #181a23;
+      box-shadow: 0 0 8px #10f2e540, 0 0 14px #7d09ff21;
+    }
+
+    section { margin-top: 32px; margin-bottom: 32px; }
+    h2 {
+      color: var(--neon-text);
+      margin-bottom: 18px;
+      text-align: left;
+      letter-spacing: 2px;
+      text-shadow: var(--neon-shadow);
+      font-size: 2em;
+      font-weight: 600;
+      animation: neonPulseSmall 3s linear infinite alternate;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      background: var(--glass-dark);
+      backdrop-filter: blur(8px);
+      border-radius: var(--profile-radius);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 1px 7px #7d09ff19;
+      margin-bottom: 26px;
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+      position: relative;
+    }
+    .profile:hover {
+      box-shadow: 0 0 6px #10f2e540, 0 0 12px #7d09ff1a;
+      transform: translateY(-1px) scale(1.01);
+    }
+    .profile-img {
+      width: 105px;
+      height: 105px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 22px 28px;
+      box-shadow: 0 0 4px #10f2e520, 0 0 4px #7d09ff22;
+      border: 2px solid var(--secondary);
+      background: #100f18;
+    }
+    .profile-info { flex: 1; padding: 13px 10px 13px 0; }
+    .profile-info h3 {
+      font-size: 1.3em;
+      margin: 0 0 6px 0;
+      color: var(--secondary);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 2px #7d09ff44;
+    }
+    .profile-info p {
+      font-size: 1em;
+      margin: 3px 0;
+      color: #e2e2fa;
+    }
+    .profile-info b, strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    a .profile {
+      cursor: pointer;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      border-width: 2px;
+    }
+    a .profile:hover { border-color: var(--primary); }
+    section#about, section#contact {
+      background: var(--glass-dark);
+      border-radius: 15px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 2px 4px #10f2e514;
+      padding: 26px 18px;
+      margin-bottom: 40px;
+    }
+    section#about p, section#contact p {
+      color: #e2e2fa;
+      font-size: 1.07em;
+      margin-top: 6px;
+    }
+    a { text-decoration: none; color: var(--secondary); transition: color .23s; }
+    a:hover { color: var(--neon-text); text-shadow: var(--neon-shadow); }
+    footer {
+      padding: 18px 0;
+      text-align: center;
+      background: var(--glass-dark);
+      border-top: 1px solid var(--glass-border);
+      color: #cfcfff;
+      letter-spacing: 2px;
+      font-size: 1em;
+      margin-top: 30px;
+      box-shadow: 0 -2px 8px #7d09ff18;
+    }
+    @media (max-width: 700px) {
+      .container { width: 98%; padding: 0; }
+      .profile { flex-direction: column; align-items: flex-start; padding: 16px 7px; }
+      .profile-img { margin: 10px 0; width: 85px; height: 85px; }
+      .profile-info h3 { font-size: 0.95em; }
+    }
+    /* Reduced neon animation for headings */
+    @keyframes neonPulseSmall {
+      from { text-shadow: 0 0 3px #10f2e540, 0 0 5px #7d09ff33; }
+      to   { text-shadow: 0 0 7px #10f2e560, 0 0 11px #7d09ff33; }
+    }
+  </style>
 </head>
-
 <body>
-    <header>
-        <div class="container">
-            <h1 style="color: black;">Top 10 Students of Our College</h1>
-            <nav>
-                <ul>
-                    <li><a href="#students">Students</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+  <header>
+    <div class="container">
+      <h1>Top 10 Students of Our College</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#students">Students</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section id="students" class="container">
+    <h2>Featured Students</h2>
+    <a href="http://adnan-khan.wuaze.com/">
+      <div class="profile">
+        <img src="assets/images/s1.jpg" alt="Student 1" class="profile-img" />
+        <div class="profile-info">
+          <h3>M. Adnan</h3>
+          <p><strong>Major:</strong> Computer Science</p>
+          <p><strong>CGPA:</strong> 9.0</p>
+          <p><strong>Achievements:</strong> creator of this website</p>
+          <p><strong>About:</strong> Adnan is known for her leadership in tech initiatives and her passion for coding.</p>
         </div>
-    </header>
-
-    <section id="students" class="container">
-        <h2>Featured Students</h2>
-
-       <a href="http://adnan-khan.wuaze.com/"> <div class="profile">
-            <img src="assets/images/s1.jpg" alt="Student 1" class="profile-img">
-            <div class="profile-info">
-                <h3>M. Adnan</h3>
-                <p><strong>Major:</strong> Computer Science</p>
-                <p><strong>CGPA:</strong> 9.0</p>
-                <p><strong>Achievements:</strong>
-                    creator of this website</p>
-                <p><strong>About:</strong> Adnan is known for her leadership in tech initiatives and her passion for
-                    coding.</p>
-            </div>
-        </div>
+      </div>
     </a>
 
-        <div class="profile">
-            <img src="assets/images/s11.jpg" alt="Student 2" class="profile-img">
-            <div class="profile-info">
-                <h3>Lucky Awasthi</h3>
-                <p><strong>Major:</strong> cyber security</p>
-                <p><strong>CGPA:</strong> 3.9</p>
-                <p><strong>Achievements:</strong> Research Assistant,</p>
-                <p><strong>About:</strong> Lucky is dedicated to environmental research and community service.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s11.jpg" alt="Student 2" class="profile-img" />
+      <div class="profile-info">
+        <h3>Lucky Awasthi</h3>
+        <p><strong>Major:</strong> Cyber Security</p>
+        <p><strong>CGPA:</strong> 3.9</p>
+        <p><strong>Achievements:</strong> Research Assistant</p>
+        <p><strong>About:</strong> Lucky is dedicated to environmental research and community service.</p>
+      </div>
+    </div>
 
-        <div class="profile">
-            <img src="assets/images/s8.jpg" alt="Student 3" class="profile-img">
-            <div class="profile-info">
-                <h3> Shivank</h3>
-                <p><strong>Major:</strong> Chemistry</p>
-                <p><strong>CGPA:</strong> 4.0</p>
-                <p><strong>Achievements:</strong> data scientist</p>
-                <p><strong>About:</strong> Shivank is passionate about problem-solving and tutoring fellow student.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s8.jpg" alt="Student 3" class="profile-img" />
+      <div class="profile-info">
+        <h3>Shivank</h3>
+        <p><strong>Major:</strong> Chemistry</p>
+        <p><strong>CGPA:</strong> 4.0</p>
+        <p><strong>Achievements:</strong> Data Scientist</p>
+        <p><strong>About:</strong> Shivank is passionate about problem-solving and tutoring fellow students.</p>
+      </div>
+    </div>
 
-        <!-- Add more student profiles here -->
-        <div class="profile">
-            <img src="assets/images/s9.jpg" alt="Student 4" class="profile-img">
-            <div class="profile-info">
-                <h3>Ayush</h3>
-                <p><strong>Major:</strong> data analysis</p>
-                <p><strong>CGPA:</strong> 8.5</p>
-                <p><strong>Achievements:</strong> data analysis</p>
-                <p><strong>About:</strong> Ayush has a keen interest in astrophysics and mentoring younger student.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s9.jpg" alt="Student 4" class="profile-img" />
+      <div class="profile-info">
+        <h3>Ayush</h3>
+        <p><strong>Major:</strong> Data Analysis</p>
+        <p><strong>CGPA:</strong> 8.5</p>
+        <p><strong>Achievements:</strong> Data Analysis</p>
+        <p><strong>About:</strong> Ayush has a keen interest in astrophysics and mentoring younger students.</p>
+      </div>
+    </div>
 
-        <div class="profile">
-            <img src="assets/images/s10.jpeg" alt="Student 5" class="profile-img">
-            <div class="profile-info">
-                <h3>Sarah Davis</h3>
-                <p><strong>Major:</strong> Chemistry</p>
-                <p><strong>CGPA:</strong> 3.95</p>
-                <p><strong>Achievements:</strong> Chemistry Fair Winner, Internship at XYZ Lab</p>
-                <p><strong>About:</strong> Sarah is dedicated to research and has a strong interest in organic
-                    chemistry.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s10.jpeg" alt="Student 5" class="profile-img" />
+      <div class="profile-info">
+        <h3>Sarah Davis</h3>
+        <p><strong>Major:</strong> Chemistry</p>
+        <p><strong>CGPA:</strong> 3.95</p>
+        <p><strong>Achievements:</strong> Chemistry Fair Winner, Internship at XYZ Lab</p>
+        <p><strong>About:</strong> Sarah is dedicated to research and has a strong interest in organic chemistry.</p>
+      </div>
+    </div>
 
-        <div class="profile">
-            <img src="assets/images/s3.jpeg" alt="Student 6" class="profile-img">
-            <div class="profile-info">
-                <h3>David Wilson</h3>
-                <p><strong>Major:</strong> History</p>
-                <p><strong>CGPA:</strong> 3.7</p>
-                <p><strong>Achievements:</strong> History Club President, Published Articles</p>
-                <p><strong>About:</strong> David is passionate about historical research and writing.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s3.jpeg" alt="Student 6" class="profile-img" />
+      <div class="profile-info">
+        <h3>David Wilson</h3>
+        <p><strong>Major:</strong> History</p>
+        <p><strong>CGPA:</strong> 3.7</p>
+        <p><strong>Achievements:</strong> History Club President, Published Articles</p>
+        <p><strong>About:</strong> David is passionate about historical research and writing.</p>
+      </div>
+    </div>
 
-        <div class="profile">
-            <img src="assets/images/s4.jpg" alt="Student 7" class="profile-img">
-            <div class="profile-info">
-                <h3>Olivia Lee</h3>
-                <p><strong>Major:</strong> English Literature</p>
-                <p><strong>CGPA:</strong> 4.0</p>
-                <p><strong>Achievements:</strong> Literary Magazine Editor, Poetry Slam Champion</p>
-                <p><strong>About:</strong> Olivia loves writing and has a passion for poetry and creative expression.
-                </p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s4.jpg" alt="Student 7" class="profile-img" />
+      <div class="profile-info">
+        <h3>Olivia Lee</h3>
+        <p><strong>Major:</strong> English Literature</p>
+        <p><strong>CGPA:</strong> 4.0</p>
+        <p><strong>Achievements:</strong> Literary Magazine Editor, Poetry Slam Champion</p>
+        <p><strong>About:</strong> Olivia loves writing and has a passion for poetry and creative expression.</p>
+      </div>
+    </div>
 
-        <div class="profile">
-            <img src="assets/images/s5.jpg" alt="Student 8" class="profile-img">
-            <div class="profile-info">
-                <h3>James Garcia</h3>
-                <p><strong>Major:</strong> Business Administration</p>
-                <p><strong>CGPA:</strong> 3.85</p>
-                <p><strong>Achievements:</strong> Business Plan Competition Winner</p>
-                <p><strong>About:</strong> James is focused on entrepreneurship and innovative business strategies.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s5.jpg" alt="Student 8" class="profile-img" />
+      <div class="profile-info">
+        <h3>James Garcia</h3>
+        <p><strong>Major:</strong> Business Administration</p>
+        <p><strong>CGPA:</strong> 3.85</p>
+        <p><strong>Achievements:</strong> Business Plan Competition Winner</p>
+        <p><strong>About:</strong> James is focused on entrepreneurship and innovative business strategies.</p>
+      </div>
+    </div>
 
-        <div class="profile">
-            <img src="assets/images/s6.jpeg" alt="Student 9" class="profile-img">
-            <div class="profile-info">
-                <h3>Sophia Martinez</h3>
-                <p><strong>Major:</strong> Art</p>
-                <p><strong>CGPA:</strong> 3.9</p>
-                <p><strong>Achievements:</strong> Art Exhibition Winner, Graphic Design Intern</p>
-                <p><strong>About:</strong> Sophia is passionate about visual arts and digital media.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s6.jpeg" alt="Student 9" class="profile-img" />
+      <div class="profile-info">
+        <h3>Sophia Martinez</h3>
+        <p><strong>Major:</strong> Art</p>
+        <p><strong>CGPA:</strong> 3.9</p>
+        <p><strong>Achievements:</strong> Art Exhibition Winner, Graphic Design Intern</p>
+        <p><strong>About:</strong> Sophia is passionate about visual arts and digital media.</p>
+      </div>
+    </div>
 
-        <div class="profile">
-            <img src="assets/images/s7.jpeg" alt="Student 10" class="profile-img">
-            <div class="profile-info">
-                <h3>Daniel Taylor</h3>
-                <p><strong>Major:</strong> Engineering</p>
-                <p><strong>CGPA:</strong> 3.95</p>
-                <p><strong>Achievements:</strong> Robotics Team Captain, Engineering Scholarship</p>
-                <p><strong>About:</strong> Daniel enjoys building and designing innovative solutions through
-                    engineering.</p>
-            </div>
-        </div>
+    <div class="profile">
+      <img src="assets/images/s7.jpeg" alt="Student 10" class="profile-img" />
+      <div class="profile-info">
+        <h3>Daniel Taylor</h3>
+        <p><strong>Major:</strong> Engineering</p>
+        <p><strong>CGPA:</strong> 3.95</p>
+        <p><strong>Achievements:</strong> Robotics Team Captain, Engineering Scholarship</p>
+        <p><strong>About:</strong> Daniel enjoys building and designing innovative solutions through engineering.</p>
+      </div>
+    </div>
+  </section>
 
-    </section>
+  <section id="about" class="container">
+    <h2>About This Program</h2>
+    <p>This initiative celebrates the achievements of the top students at our college. We aim to inspire others and showcase excellence in academia and extracurricular activities.</p>
+  </section>
 
-    <section id="about" class="container">
-        <h2>About This Program</h2>
-        <p>This initiative celebrates the achievements of the top students at our college. We aim to inspire others and
-            showcase excellence in academia and extracurricular activities.</p>
-    </section>
+  <section id="contact" class="container">
+    <h2>Contact Information</h2>
+    <p>Email: <a href="index.html">GCRG.edu.com</a></p>
+  </section>
 
-    <section id="contact" class="container">
-        <h2>Contact Information</h2>
-        <p>Email: <a href="index.html"> GCRG.edu.com</a></p>
-    </section>
-
-    <footer>
-        <p>&copy; 2024 GCRG.edu.com. All Rights Reserved.</p>
-    </footer>
+  <footer>
+    <p>&copy; 2024 GCRG.edu.com. All Rights Reserved.</p>
+  </footer>
 </body>
-
 </html>

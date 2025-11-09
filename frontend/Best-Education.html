@@ -1,11 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Top 10 Best Educational Programs of Our College</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #10f2e5;
+      --secondary: #7d09ff;
+      --bg-dark: #181a23;
+      --glass-dark: rgba(35, 36, 43, 0.88);
+      --glass-border: rgba(120,120,255,0.20);
+      --neon-text: #10f2e5;
+      --neon-shadow: 0 0 3px #10f2e540, 0 0 5px #7d09ff33;
+      --hover-gradient: linear-gradient(90deg, #10f2e5 0%, #7d09ff 100%);
+      --profile-radius: 16px;
+      --transition: 0.3s cubic-bezier(.7,.9,.06,.98);
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+    body {
+      margin: 0;
+      background: var(--bg-dark);
+      min-height: 100vh;
+      color: #eee;
+      position: relative;
+    }
+
+    header {
+      padding: 32px 0 16px 0;
+      background: var(--glass-dark);
+      border-bottom: 1px solid var(--glass-border);
+      box-shadow: 0 2px 8px rgba(16,80,80,0.11);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      margin: 0;
+      color: var(--neon-text);
+      text-shadow: var(--neon-shadow);
+      font-weight: 700;
+      animation: neonPulseSmall 2.6s linear infinite alternate;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0 0;
+    }
+    nav a {
+      color: var(--neon-text);
+      padding: 8px 20px;
+      background: rgba(20, 20, 30, 0.16);
+      border-radius: 8px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      box-shadow: 0 0 4px #10f2e52c;
+      transition: background var(--transition), color var(--transition);
+      border: 1px solid var(--secondary);
+    }
+    nav a:hover {
+      background: var(--hover-gradient);
+      color: #181a23;
+      box-shadow: 0 0 8px #10f2e540, 0 0 14px #7d09ff21;
+    }
+
+    section {
+      margin-top: 32px;
+      margin-bottom: 32px;
+    }
+    h2 {
+      color: var(--neon-text);
+      margin-bottom: 18px;
+      text-align: left;
+      letter-spacing: 2px;
+      text-shadow: var(--neon-shadow);
+      font-size: 2em;
+      font-weight: 600;
+      animation: neonPulseSmall 3s linear infinite alternate;
+    }
+    .profile {
+      display: flex;
+      align-items: center;
+      background: var(--glass-dark);
+      backdrop-filter: blur(8px);
+      border-radius: var(--profile-radius);
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 1px 7px #7d09ff19;
+      margin-bottom: 26px;
+      overflow: hidden;
+      transition: box-shadow var(--transition), transform var(--transition);
+      position: relative;
+    }
+    .profile:hover {
+      box-shadow: 0 0 6px #10f2e540, 0 0 12px #7d09ff1a;
+      transform: translateY(-1px) scale(1.01);
+    }
+    .profile-img {
+      width: 105px;
+      height: 105px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 22px 28px;
+      box-shadow: 0 0 4px #10f2e520, 0 0 4px #7d09ff22;
+      border: 2px solid var(--secondary);
+      background: #100f18;
+    }
+    .profile-info {
+      flex: 1;
+      padding: 13px 10px 13px 0;
+    }
+    .profile-info h3 {
+      font-size: 1.3em;
+      margin: 0 0 6px 0;
+      color: var(--secondary);
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 2px #7d09ff44;
+    }
+    .profile-info p {
+      font-size: 1em;
+      margin: 3px 0;
+      color: #e2e2fa;
+    }
+    .profile-info b,
+    strong {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    a .profile {
+      cursor: pointer;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      border-width: 2px;
+    }
+    a .profile:hover {
+      border-color: var(--primary);
+    }
+    section#about,
+    section#contact {
+      background: var(--glass-dark);
+      border-radius: 15px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 2px 4px #10f2e514;
+      padding: 26px 18px;
+      margin-bottom: 40px;
+    }
+    section#about p,
+    section#contact p {
+      color: #e2e2fa;
+      font-size: 1.07em;
+      margin-top: 6px;
+    }
+    a {
+      text-decoration: none;
+      color: var(--secondary);
+      transition: color 0.23s;
+    }
+    a:hover {
+      color: var(--neon-text);
+      text-shadow: var(--neon-shadow);
+    }
+    footer {
+      padding: 18px 0;
+      text-align: center;
+      background: var(--glass-dark);
+      border-top: 1px solid var(--glass-border);
+      color: #cfcfff;
+      letter-spacing: 2px;
+      font-size: 1em;
+      margin-top: 30px;
+      box-shadow: 0 -2px 8px #7d09ff18;
+    }
+    @media (max-width: 700px) {
+      .container {
+        width: 98%;
+        padding: 0;
+      }
+      .profile {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px 7px;
+      }
+      .profile-img {
+        margin: 10px 0;
+        width: 85px;
+        height: 85px;
+      }
+      .profile-info h3 {
+        font-size: 0.95em;
+      }
+    }
+    @keyframes neonPulseSmall {
+      from {
+        text-shadow: 0 0 3px #10f2e540, 0 0 5px #7d09ff33;
+      }
+      to {
+        text-shadow: 0 0 7px #10f2e560, 0 0 11px #7d09ff33;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>best Education</h1>
+  <header>
+    <div class="container">
+      <h1>Top 10 Best Educational Programs</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <section id="programs" class="container">
+    <h2>Featured Educational Programs</h2>
+
+    <div class="profile">
+      <img src="assets/images/edu1.jpg" alt="Program 1" class="profile-img" />
+      <div class="profile-info">
+        <h3>Artificial Intelligence & Machine Learning</h3>
+        <p><strong>Category:</strong> Computer Science</p>
+        <p><strong>Duration:</strong> 2 Years</p>
+        <p><strong>Highlights:</strong> Hands-on projects, real-time AI applications</p>
+        <p><strong>About:</strong> This program focuses on cutting-edge AI technology and practical implementation in various industries.</p>
+      </div>
+    </div>
+
+    <div class="profile">
+      <img src="assets/images/edu2.jpg" alt="Program 2" class="profile-img" />
+      <div class="profile-info">
+        <h3>Environmental Science & Sustainability</h3>
+        <p><strong>Category:</strong> Science</p>
+        <p><strong>Duration:</strong> 3 Years</p>
+        <p><strong>Highlights:</strong> Field research, climate change studies</p>
+        <p><strong>About:</strong> This program prepares students to address global environmental challenges through science and policy.</p>
+      </div>
+    </div>
+
+    <div class="profile">
+      <img src="assets/images/edu3.jpg" alt="Program 3" class="profile-img" />
+      <div class="profile-info">
+        <h3>Business Administration & Entrepreneurship</h3>
+        <p><strong>Category:</strong> Management</p>
+        <p><strong>Duration:</strong> 2 Years</p>
+        <p><strong>Highlights:</strong> Startup mentorship, business planning</p>
+        <p><strong>About:</strong> Equip yourself with skills to start and grow your own business or lead corporate innovation.</p>
+      </div>
+    </div>
+
+    <div class="profile">
+      <img src="assets/images/edu4.jpg" alt="Program 4" class="profile-img" />
+      <div class="profile-info">
+        <h3>Creative Writing & Literature</h3>
+        <p><strong>Category:</strong> Arts & Humanities</p>
+        <p><strong>Duration:</strong> 3 Years</p>
+        <p><strong>Highlights:</strong> Workshops, literary analysis, publications</p>
+        <p><strong>About:</strong> Develop your writing craft and explore global literary traditions and contemporary trends.</p>
+      </div>
+    </div>
+
+    <div class="profile">
+      <img src="assets/images/edu5.jpg" alt="Program 5" class="profile-img" />
+      <div class="profile-info">
+        <h3>Data Science & Analytics</h3>
+        <p><strong>Category:</strong> Computer Science</p>
+        <p><strong>Duration:</strong> 2 Years</p>
+        <p><strong>Highlights:</strong> Big data techniques, predictive modeling</p>
+        <p><strong>About:</strong> Learn to analyze big data and generate business insights through statistical models and algorithms.</p>
+      </div>
+    </div>
+
+    <!-- Add 5 more profiles as needed below -->
+
+  </section>
+  <section id="about" class="container">
+    <h2>About This Program</h2>
+    <p>This section highlights our top educational programs aimed to boost learning, innovation, and career readiness for students.</p>
+  </section>
+  <section id="contact" class="container">
+    <h2>Contact Information</h2>
+    <p>Email: <a href="index.html">GCRG.edu.com</a></p>
+  </section>
+  <footer>
+    <p>&copy; 2024 GCRG.edu.com. All Rights Reserved.</p>
+  </footer>
 </body>
 </html>
