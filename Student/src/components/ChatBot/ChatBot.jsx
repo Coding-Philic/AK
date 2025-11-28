@@ -2,10 +2,15 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { marked } from "marked";
 import { gsap } from "gsap";
 import Navbar from "../Navbar";
+// Note: we use the native Web Speech API (window.speechSynthesis) directly for TTS
+
 
 const ChatBot = () => {
   const [userInput, setUserInput] = useState("");
   const [response, setResponse] = useState("");
+
+  console.log(window.SpeechRecognition, window.webkitSpeechRecognition);
+
 
   // voice input
   const [isListening, setIsListening] = useState(false);
@@ -26,9 +31,73 @@ const ChatBot = () => {
   const boxRef = useRef(null);
   const tlRef = useRef(null);
   const hiddenFileInputRef = useRef(null);
+  // toggle for reading bot responses aloud
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(true);
+
+
+  // Clean text: strip HTML and basic markdown before speaking
+  const sanitizeForSpeech = (raw) => {
+    if (!raw) return "";
+    // Strip HTML tags
+    const div = document.createElement("div");
+    div.innerHTML = raw;
+    let text = div.textContent || div.innerText || "";
+    // Basic markdown cleanup
+    text = text.replace(/```[\s\S]*?```/g, ""); // remove fenced code blocks
+    text = text.replace(/`([^`]+)`/g, "$1"); // inline code
+    text = text.replace(/^[#>]+\s?/gm, ""); // headings/blockquote markers
+    text = text.replace(/\*\*(.*?)\*\*/g, "$1"); // bold
+    text = text.replace(/\*(.*?)\*/g, "$1"); // italics
+    text = text.replace(/\[(.*?)\]\((.*?)\)/g, "$1"); // links: keep text
+    text = text.replace(/\s+\n\s+/g, "\n");
+    return text.trim();
+  };
+
+  const speakText = (rawText) => {
+    if (!window.speechSynthesis) return;
+    const text = sanitizeForSpeech(rawText);
+    if (!text) return;
+
+    // Stop any previous speech
+    try { window.speechSynthesis.cancel(); } catch(e) { /* ignore */ }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-IN"; // prefer en-IN; change as needed
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    utterance.onend = () => console.log("Speech finished");
+    utterance.onerror = (err) => console.error("Speech error:", err);
+
+    const setVoiceAndSpeak = () => {
+      const voices = window.speechSynthesis.getVoices();
+      // prefer an English voice (en-IN, en-US, en-GB)
+      utterance.voice = voices.find(v => /en-(IN|US|GB)/i.test(v.lang)) || voices.find(v => v.lang?.startsWith('en')) || voices[0];
+      try { window.speechSynthesis.speak(utterance); } catch (e) { console.error('Failed to speak', e); }
+    };
+
+    const voicesNow = window.speechSynthesis.getVoices();
+    if (voicesNow && voicesNow.length) {
+      setVoiceAndSpeak();
+    } else {
+      // Some browsers load voices asynchronously
+      window.speechSynthesis.onvoiceschanged = setVoiceAndSpeak;
+      // fallback timer
+      setTimeout(() => {
+        const vs = window.speechSynthesis.getVoices();
+        if (vs && vs.length) setVoiceAndSpeak();
+      }, 500);
+    }
+  };
+
+
+console.log("speechSynthesis supported?", !!window.speechSynthesis);
+console.log("voices available:", window.speechSynthesis.getVoices());
 
   // voice input
   useEffect(() => {
+
+
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -36,6 +105,13 @@ const ChatBot = () => {
       console.error("Speech recognition not supported in this browser.");
       return;
     }
+
+
+
+
+
+
+
 
     const recognition = new SpeechRecognition();
     recognition.lang = "en-IN"; // change to "hi-IN" for Hindi
@@ -108,27 +184,41 @@ const ChatBot = () => {
 
   // message sending (kept same, but allow param for voice auto-send)
   const sendMessage = async (presetText) => {
-    const text = typeof presetText === "string" ? presetText : userInput;
-    if (!text.trim()) {
-      setResponse("Please enter a message.");
-      return;
+  const text = typeof presetText === "string" ? presetText : userInput;
+
+  if (!text.trim()) {
+    setResponse("Please enter a message.");
+    return;
+  }
+
+  setResponse("Loading...");
+
+  try {
+    const res = await fetch("http://localhost:3000/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text }),
+    });
+
+    const data = await res.json();
+    const markdownText = data.answer || "No response received.";
+
+    // set HTML output
+    setResponse(marked.parse(markdownText));
+
+    // Speak the plain text (sanitize markdown/html) if enabled
+    if (isVoiceEnabled) {
+      speakText(markdownText);
     }
-    setResponse("Loading...");
-    try {
-      const res = await fetch("http://localhost:3000/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
-      });
-      const data = await res.json();
-      const markdownText = data.answer || "No response received.";
-      // Note: marked does not sanitize; consider DOMPurify in real apps.
-      setResponse(marked.parse(markdownText));
-      setUserInput("");
-    } catch (error) {
-      setResponse("Error: " + error.message);
-    }
-  };
+
+    setUserInput("");
+  } catch (error) {
+    console.error("sendMessage error:", error);
+    setResponse("Error: " + error.message);
+  }
+};
+
+
 
   // helpers
   const humanFileSize = (size) => {
@@ -188,7 +278,7 @@ const ChatBot = () => {
       ref={rootRef}
       className="min-h-svh grid place-items-center bg-[#0b0f1a] px-4 will-change-transform"
     >
-      <Navbar />
+      
       <main
         ref={cardRef}
         className="relative w-[min(720px,96vw)] overflow-visible
@@ -286,6 +376,18 @@ const ChatBot = () => {
                           }`}
             >
               {isListening ? "🛑 Stop" : "🎤 Speak"}
+            </button>
+
+            {/* Voice toggle */}
+            <button
+              onClick={() => setIsVoiceEnabled((s) => !s)}
+              className={`ml-3 px-4 py-3 rounded-[10px] text-white font-semibold text-sm
+                          transition-all duration-300 transform
+                          ${isVoiceEnabled ? "bg-green-600 hover:bg-green-700" : "bg-gray-600 hover:bg-gray-700"}`}
+              aria-pressed={isVoiceEnabled}
+              title={isVoiceEnabled ? "Voice enabled - click to disable" : "Voice disabled - click to enable"}
+            >
+              {isVoiceEnabled ? "🔊 Voice ON" : "🔈 Voice OFF"}
             </button>
           </div>
 

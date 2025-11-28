@@ -4,6 +4,15 @@ const multer = require("multer");
 const pdfParse = require("pdf-parse");
 const mammoth = require("mammoth");
 const fs = require("fs");
+// Try to load dotenv if available (don't crash if it's not installed)
+try {
+  // eslint-disable-next-line global-require
+  require('dotenv').config();
+} catch (e) {
+  // dotenv not installed; the server can still use environment variables
+  // set by the OS or the caller. Install dotenv with `npm install dotenv` if
+  // you want to use a .env file.
+}
 
 const app = express();
 app.use(cors({ origin: "http://localhost:5173" }));
@@ -11,7 +20,12 @@ app.use(express.json());
 
 const upload = multer({ dest: "uploads/" }); // Temporary folder
 
-const API_KEY = "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";
+// Read API key from environment for security. Do NOT commit real keys to source control.
+// Set OPENROUTER_API_KEY in your environment or in a .env file in this folder.
+const API_KEY = process.env.OPENROUTER_API_KEY || "";
+
+// Helpful startup log so you can see whether the key is present.
+console.log('OPENROUTER_API_KEY present:', !!API_KEY);
 
 // Store file text globally (you can improve this later with sessions)
 let uploadedFileText = "";
@@ -54,9 +68,18 @@ app.post("/api/upload", upload.single("file"), async (req, res) => {
 app.post("/api/chat", async (req, res) => {
   try {
     const userMessage = req.body.message;
+    // Keep the context reasonably small to avoid hitting token limits.
+    // Tokens ~= 3-4 chars on average; reduce the slice if you have large files.
+    const CONTEXT_SLICE_CHARS = parseInt(process.env.CONTEXT_SLICE_CHARS || '2000', 10);
     const context = uploadedFileText
-      ? `You have the following document content available:\n\n${uploadedFileText.slice(0, 5000)}\n\n`
+      ? `You have the following document content available:\n\n${uploadedFileText.slice(0, CONTEXT_SLICE_CHARS)}\n\n`
       : "";
+    // Allow overriding the max response tokens via env; default to a conservative 800 tokens.
+    const MAX_RESPONSE_TOKENS = parseInt(process.env.OPENROUTER_MAX_TOKENS || '800', 10);
+    if (!API_KEY) {
+      console.error('OpenRouter API key is not configured. Set OPENROUTER_API_KEY in your .env file.');
+      return res.status(500).json({ error: 'Server misconfiguration: missing API key' });
+    }
 
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
@@ -66,16 +89,35 @@ app.post("/api/chat", async (req, res) => {
       },
       body: JSON.stringify({
         model: "anthropic/claude-3.5-sonnet",
+        max_tokens: MAX_RESPONSE_TOKENS,
+        temperature: 0.2,
         messages: [
           { role: "system", content: "You are an assistant that answers questions based on uploaded documents and user input." },
           { role: "user", content: context + "\nUser question: " + userMessage },
         ],
       }),
     });
-console.log(response)
+
+    // Better error surface: if upstream returns non-OK, forward the message
+    if (!response.ok) {
+      let errBody = {};
+      try {
+        errBody = await response.json();
+      } catch (e) {
+        errBody = { error: 'Upstream error', status: response.status };
+      }
+      console.error('OpenRouter error:', response.status, errBody);
+      // Provide actionable advice for 402 Payment Required errors
+      if (response.status === 402) {
+        return res.status(402).json({
+          error: errBody,
+          hint: 'Your OpenRouter account has insufficient credits or the requested token limit is too high. Reduce max tokens or add credits at https://openrouter.ai/settings/credits.'
+        });
+      }
+      return res.status(response.status).json({ error: errBody });
+    }
 
     const data = await response.json();
-    console.log(data)
     const answer = data.choices?.[0]?.message?.content || "No response from model.";
     res.json({ answer });
   } catch (err) {

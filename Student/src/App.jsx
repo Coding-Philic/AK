@@ -16,8 +16,8 @@ function App() {
     <>
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/chatbot" element={<ChatBot />} />
+        
+        <Route path="/" element={<ChatBot />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/Enquiry" element={<EnquiryForm />} />
