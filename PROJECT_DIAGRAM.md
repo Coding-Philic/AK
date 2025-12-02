@@ -57,7 +57,7 @@ AK/
 │  │  │  ├─ owl-carousel.js             [Carousel Script]
 │  │  │  ├─ slick-slider.js             [Slider Script]
 │  │  │  ├─ tabs.js                     [Tab Navigation]
-│  │  │  └─ video.js                    [Video Handler
+│  │  │  └─ video.js                    [Video Handler]
 │  │  │
 │  │  ├─ 📂 images/
 │  │  │  ├─ s1.jpg, s2.jpg, ... s11.jpg [Student Profile Images]
