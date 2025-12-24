@@ -1,4 +1,4 @@
-# 📁 AK PROJECT - COMPLETE FOLDER STRUCTURE DIAGRAM
+#  AK PROJECT - COMPLETE FOLDER STRUCTURE DIAGRAM
 
 ##  COMPLETE PROJECT ARCHITECTURE
 
@@ -405,7 +405,7 @@ AK/
 
 ---
 
-## 🔗 CONNECTION DIAGRAM
+##  CONNECTION DIAGRAM
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -449,7 +449,7 @@ AK/
 
 ---
 
-## 📍 PORT ALLOCATION
+##  PORT ALLOCATION
 
 ```
 ┌────────────────────────────────────────┐
@@ -466,7 +466,7 @@ AK/
 
 ---
 
-## 🔐 Security Structure
+##  Security Structure
 
 ```
 Sensitive Files (NOT in Git):
@@ -485,7 +485,7 @@ Public Files (In Git):
 
 ---
 
-## 📦 TOTAL PROJECT BREAKDOWN
+##  TOTAL PROJECT BREAKDOWN
 
 ```
 Total Directories:     25+
