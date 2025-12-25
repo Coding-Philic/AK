@@ -2,7 +2,7 @@
 
 ##  COMPLETE PROJECT ARCHITECTURE
 
-``
+```
 AK/
 │
 ├─ 📂 Backend/
