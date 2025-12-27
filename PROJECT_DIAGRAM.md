@@ -3,7 +3,7 @@
 ##  COMPLETE PROJECT ARCHITECTURE
 
 ```
-AK/
+A/
 │
 ├─ 📂 Backend/
 │  ├─ 📂 config/
